@@ -1,0 +1,52 @@
+[
+  {
+    "id": "OA-001",
+    "texto": "¿Puedo llevar a mi perro en cabina?",
+    "nota_didactica": "Consulta ancla: español, muy corta. Sirve de referencia para todo lo demás."
+  },
+  {
+    "id": "OA-002",
+    "texto": "Mi vuelo OA123 de Bogotá a Lima fue cancelado y no me llegó ningún correo. ¿Qué opciones tengo para reprogramar?",
+    "nota_didactica": "Español, longitud media, con código de vuelo y nombres propios."
+  },
+  {
+    "id": "OA-003",
+    "texto": "Hi, I was charged twice for my seat upgrade on flight OA455. How can I get a refund for the duplicate charge?",
+    "nota_didactica": "Inglés: el tokenizador está optimizado para este idioma (mejor ratio caracteres/token)."
+  },
+  {
+    "id": "OA-004",
+    "texto": "Perdieron mi maleta 😡😡 llevo 3 días esperando!!! 🧳❌ vuelo OA778 ✈️ necesito mi ropa YA 🙏🙏",
+    "nota_didactica": "Emojis: cada emoji se parte en varios tokens de bytes, empeora el ratio caracteres/token."
+  },
+  {
+    "id": "OA-005",
+    "texto": "¿Cuáles son las medidas y el peso máximo del equipaje de mano en la tarifa Light?",
+    "nota_didactica": "Pregunta de política frecuente, respuesta esperada corta."
+  },
+  {
+    "id": "OA-006",
+    "texto": "Compré el boleto con un error en mi apellido (puse Gonzales en vez de González). ¿Lo puedo corregir sin pagar?",
+    "nota_didactica": "Tildes y paréntesis: caracteres no ASCII que también cuestan tokens."
+  },
+  {
+    "id": "OA-007",
+    "texto": "Hola, tengo un viaje Buenos Aires - Madrid con escala en São Paulo el 14 de noviembre (reserva K7Q2PX). Tengo tres dudas: 1) si mi primer vuelo se retrasa y pierdo la conexión en São Paulo, ¿OrbitAir me reubica automáticamente en el siguiente vuelo o tengo que gestionarlo yo en el aeropuerto? 2) En ese caso, ¿me corresponde hotel y comida si la espera es de más de 8 horas? 3) Viajo con mi madre de 78 años que usa silla de ruedas: ¿cómo solicito asistencia especial para ella en los tres aeropuertos y con cuánta anticipación tengo que pedirlo?",
+    "nota_didactica": "La más larga, 3 preguntas en una: pensada para streaming (TTFT) y para ver el efecto de max_tokens."
+  },
+  {
+    "id": "OA-008",
+    "texto": "kiero cambiar la fecha d mi vuelo xq me enferme, se puede sin multa??",
+    "nota_didactica": "Español informal con errores de ortografía: palabras 'raras' para el tokenizador."
+  },
+  {
+    "id": "OA-009",
+    "texto": "¿Cuántas millas OrbitPlus necesito para un pasaje ida y vuelta a Cancún en temporada baja?",
+    "nota_didactica": "Nombre de marca inventado (OrbitPlus): el modelo no lo conoce, riesgo de inventar datos."
+  },
+  {
+    "id": "OA-010",
+    "texto": "Mi hija de 12 años viaja sola de Santiago a Mendoza. ¿Qué documentos necesita y cuánto cuesta el servicio de menor no acompañado?",
+    "nota_didactica": "Consulta sensible (menor de edad + documentación): respuesta que exige cautela."
+  }
+]

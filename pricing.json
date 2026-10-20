@@ -1,0 +1,13 @@
+{
+  "_fuente": "Precios en USD por 1M de tokens (texto). OpenAI/Anthropic: lección L1 (2026-09). Gemini: ai.google.dev/gemini-api/docs/pricing (2026-10-19, tier pago). Cambian seguido: revisar antes de usar.",
+  "_nota_gemini": "En Gemini el output incluye los tokens de 'thinking'. gemini-3.8-flash sube a 1.50/7.50 desde 2027-01-01.",
+  "gpt-4.1-mini": {"input_per_1m": 0.40, "output_per_1m": 1.60},
+  "gpt-4.1-nano": {"input_per_1m": 0.10, "output_per_1m": 0.40},
+  "claude-haiku-4-5": {"input_per_1m": 1.00, "output_per_1m": 5.00},
+  "claude-sonnet-4-5": {"input_per_1m": 3.00, "output_per_1m": 15.00},
+  "gemini-3.1-flash-lite": {"input_per_1m": 0.25, "output_per_1m": 1.50},
+  "gemini-3.5-flash-lite": {"input_per_1m": 0.30, "output_per_1m": 2.50},
+  "gemini-3.8-flash": {"input_per_1m": 0.75, "output_per_1m": 3.75},
+  "gemini-2.5-flash-lite": {"input_per_1m": 0.10, "output_per_1m": 0.40},
+  "gemini-2.5-flash": {"input_per_1m": 0.30, "output_per_1m": 2.50}
+}

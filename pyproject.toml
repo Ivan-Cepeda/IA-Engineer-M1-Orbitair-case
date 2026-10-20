@@ -1,0 +1,23 @@
+[project]
+name = "orbitair"
+version = "0.1.0"
+description = "M1/L1 — Cliente multi-proveedor, tokenización, streaming, rate limits y costo por token (caso OrbitAir)"
+requires-python = ">=3.10"
+dependencies = [
+    "anthropic>=0.40",
+    "google-genai[local-tokenizer]>=2.0",  # extra = tokenizador local de Gemini (Paso 2)
+    "openai>=1.50",
+    "python-dotenv>=1.0",
+    "tiktoken>=0.8",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+# No es una librería instalable: los Pasos se corren con `uv run python -m pasos.pasoX`.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
