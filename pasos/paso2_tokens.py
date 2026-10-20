@@ -5,6 +5,12 @@ La tokenización con tiktoken es REAL también en modo mock.
 Ejecutar:
     uv run python -m pasos.paso2_tokens
 """
+import sys
+from pathlib import Path
+
+# Permite correrlo también como `python pasos/pasoX.py` o desde la carpeta pasos/
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import tiktoken
 
 from orbitair import config

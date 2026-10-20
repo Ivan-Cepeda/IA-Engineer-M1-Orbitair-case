@@ -4,6 +4,12 @@ PASO 1 — Cliente multi-proveedor con contrato unificado (parte A de la consign
 Ejecutar desde la carpeta orbitair/:
     uv run python -m pasos.paso1_cliente
 """
+import sys
+from pathlib import Path
+
+# Permite correrlo también como `python pasos/pasoX.py` o desde la carpeta pasos/
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from orbitair import config
 from orbitair.cliente import LLMResponse, ask
 from orbitair.datos import consulta

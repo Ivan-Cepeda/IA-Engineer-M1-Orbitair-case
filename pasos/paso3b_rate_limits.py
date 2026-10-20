@@ -5,6 +5,12 @@ Todo este paso usa errores SIMULADOS: no hace falta (ni conviene) provocar 429 r
 Ejecutar:
     uv run python -m pasos.paso3b_rate_limits
 """
+import sys
+from pathlib import Path
+
+# Permite correrlo también como `python pasos/pasoX.py` o desde la carpeta pasos/
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import time
 
 from orbitair import config

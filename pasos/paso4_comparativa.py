@@ -7,6 +7,12 @@ Ejecutar:
     uv run python -m pasos.paso4_comparativa
     uv run python -m pasos.paso4_comparativa --max-tokens 120 --escala 50000
 """
+import sys
+from pathlib import Path
+
+# Permite correrlo también como `python pasos/pasoX.py` o desde la carpeta pasos/
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import argparse
 import csv
 import statistics
