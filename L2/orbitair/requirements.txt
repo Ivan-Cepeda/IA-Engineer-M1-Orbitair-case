@@ -1,0 +1,7 @@
+# Alternativa a `uv sync` para quien use pip (mismas dependencias que pyproject.toml).
+anthropic>=0.40
+google-genai[local-tokenizer]>=2.0
+openai>=1.50
+python-dotenv>=1.0
+tiktoken>=0.8
+pytest>=8

@@ -1,0 +1,1 @@
+Clasifica la consulta en: equipaje, cambios_cancelaciones, reembolsos_cobros, servicios_especiales, millas.

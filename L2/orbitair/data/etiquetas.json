@@ -1,0 +1,102 @@
+{
+  "OA-001": {
+    "categoria": "servicios_especiales",
+    "regla": null,
+    "justificacion": "Viajar con mascota es un servicio especial."
+  },
+  "OA-002": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R2",
+    "justificacion": "Vuelo cancelado por la aerolínea: pide opciones para reprogramar."
+  },
+  "OA-003": {
+    "categoria": "reembolsos_cobros",
+    "regla": "R1",
+    "justificacion": "Cobro duplicado: aunque sea por un asiento, el problema es el cobro."
+  },
+  "OA-004": {
+    "categoria": "equipaje",
+    "regla": null,
+    "justificacion": "Maleta perdida."
+  },
+  "OA-005": {
+    "categoria": "equipaje",
+    "regla": null,
+    "justificacion": "Política de equipaje de mano."
+  },
+  "OA-006": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R2",
+    "justificacion": "Corregir el apellido es modificar la reserva, no 'otro'."
+  },
+  "OA-007": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R3",
+    "justificacion": "Tres preguntas: gana la primera acción operativa (reubicación por conexión perdida)."
+  },
+  "OA-008": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R2",
+    "justificacion": "Cambio de fecha."
+  },
+  "OA-009": {
+    "categoria": "millas",
+    "regla": null,
+    "justificacion": "Canje de millas OrbitPlus."
+  },
+  "OA-010": {
+    "categoria": "servicios_especiales",
+    "regla": null,
+    "justificacion": "Menor no acompañado."
+  },
+  "OA-011": {
+    "categoria": "equipaje",
+    "regla": null,
+    "justificacion": "Equipaje dañado."
+  },
+  "OA-012": {
+    "categoria": "reembolsos_cobros",
+    "regla": "R1",
+    "justificacion": "Pide la devolución del dinero."
+  },
+  "OA-013": {
+    "categoria": "servicios_especiales",
+    "regla": null,
+    "justificacion": "Condición médica / embarazo."
+  },
+  "OA-014": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R2",
+    "justificacion": "Cambio de titular/nombre de la reserva."
+  },
+  "OA-015": {
+    "categoria": "millas",
+    "regla": null,
+    "justificacion": "Acumulación de puntos."
+  },
+  "OA-016": {
+    "categoria": "otro",
+    "regla": null,
+    "justificacion": "Servicio a bordo informativo: cajón."
+  },
+  "OA-017": {
+    "categoria": "reembolsos_cobros",
+    "regla": "R1",
+    "justificacion": "Cobro duplicado, aunque sea de equipaje."
+  },
+  "OA-018": {
+    "categoria": "cambios_cancelaciones",
+    "regla": "R3",
+    "justificacion": "Necesita reubicación por conexión perdida; la queja es el tono, no la tarea."
+  },
+  "OA-019": {
+    "categoria": "equipaje",
+    "regla": "R4",
+    "justificacion": "Se clasifica lo que PREGUNTA (guitarra), no lo que menciona (gato)."
+  },
+  "OA-020": {
+    "categoria": "otro",
+    "regla": null,
+    "justificacion": "Información general: cajón."
+  }
+}

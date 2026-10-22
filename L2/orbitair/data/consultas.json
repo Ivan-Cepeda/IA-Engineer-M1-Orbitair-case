@@ -1,0 +1,122 @@
+[
+  {
+    "id": "OA-001",
+    "texto": "¿Puedo llevar a mi perro en cabina?",
+    "nota_didactica": "Consulta ancla: español, muy corta. Sirve de referencia para todo lo demás.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-002",
+    "texto": "Mi vuelo OA123 de Bogotá a Lima fue cancelado y no me llegó ningún correo. ¿Qué opciones tengo para reprogramar?",
+    "nota_didactica": "Español, longitud media, con código de vuelo y nombres propios.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-003",
+    "texto": "Hi, I was charged twice for my seat upgrade on flight OA455. How can I get a refund for the duplicate charge?",
+    "nota_didactica": "Inglés: el tokenizador está optimizado para este idioma (mejor ratio caracteres/token).",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-004",
+    "texto": "Perdieron mi maleta 😡😡 llevo 3 días esperando!!! 🧳❌ vuelo OA778 ✈️ necesito mi ropa YA 🙏🙏",
+    "nota_didactica": "Emojis: cada emoji se parte en varios tokens de bytes, empeora el ratio caracteres/token.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-005",
+    "texto": "¿Cuáles son las medidas y el peso máximo del equipaje de mano en la tarifa Light?",
+    "nota_didactica": "Pregunta de política frecuente, respuesta esperada corta.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-006",
+    "texto": "Compré el boleto con un error en mi apellido (puse Gonzales en vez de González). ¿Lo puedo corregir sin pagar?",
+    "nota_didactica": "Tildes y paréntesis: caracteres no ASCII que también cuestan tokens.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-007",
+    "texto": "Hola, tengo un viaje Buenos Aires - Madrid con escala en São Paulo el 14 de noviembre (reserva K7Q2PX). Tengo tres dudas: 1) si mi primer vuelo se retrasa y pierdo la conexión en São Paulo, ¿OrbitAir me reubica automáticamente en el siguiente vuelo o tengo que gestionarlo yo en el aeropuerto? 2) En ese caso, ¿me corresponde hotel y comida si la espera es de más de 8 horas? 3) Viajo con mi madre de 78 años que usa silla de ruedas: ¿cómo solicito asistencia especial para ella en los tres aeropuertos y con cuánta anticipación tengo que pedirlo?",
+    "nota_didactica": "La más larga, 3 preguntas en una: pensada para streaming (TTFT) y para ver el efecto de max_tokens.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-008",
+    "texto": "kiero cambiar la fecha d mi vuelo xq me enferme, se puede sin multa??",
+    "nota_didactica": "Español informal con errores de ortografía: palabras 'raras' para el tokenizador.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-009",
+    "texto": "¿Cuántas millas OrbitPlus necesito para un pasaje ida y vuelta a Cancún en temporada baja?",
+    "nota_didactica": "Nombre de marca inventado (OrbitPlus): el modelo no lo conoce, riesgo de inventar datos.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-010",
+    "texto": "Mi hija de 12 años viaja sola de Santiago a Mendoza. ¿Qué documentos necesita y cuánto cuesta el servicio de menor no acompañado?",
+    "nota_didactica": "Consulta sensible (menor de edad + documentación): respuesta que exige cautela.",
+    "lote": "dev"
+  },
+  {
+    "id": "OA-011",
+    "texto": "Mi valija llegó con una rueda rota, ¿a quién le reclamo?",
+    "nota_didactica": "Equipaje dañado: caso fácil de equipaje.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-012",
+    "texto": "Cancelé yo mi vuelo a Lima por un viaje de trabajo. ¿Me devuelven el dinero o solo me dan un crédito?",
+    "nota_didactica": "Ambigua: menciona cancelación pero pide dinero.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-013",
+    "texto": "¿Puedo viajar embarazada de 30 semanas? ¿Necesito certificado?",
+    "nota_didactica": "Servicio especial / condición médica.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-014",
+    "texto": "Se me venció el pasaporte y no puedo viajar. ¿Puedo pasarle el pasaje a mi hermano con su nombre?",
+    "nota_didactica": "Ambigua: cambio de nombre/titular de la reserva.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-015",
+    "texto": "¿Cuántos puntos OrbitPlus sumo si vuelo en ejecutiva a Miami?",
+    "nota_didactica": "Programa de millas.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-016",
+    "texto": "¿Tienen wifi a bordo en los vuelos internacionales?",
+    "nota_didactica": "No encaja en ninguna categoría operativa: va al cajón.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-017",
+    "texto": "En el aeropuerto me cobraron dos veces el equipaje de bodega, tengo los dos tickets.",
+    "nota_didactica": "Ambigua: habla de equipaje pero el problema es un cobro.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-018",
+    "texto": "Mi vuelo se atrasó 6 horas, perdí la conexión a Roma y nadie en el mostrador me da una solución!!",
+    "nota_didactica": "Ambigua: suena a queja, pero lo que necesita es reubicación.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-019",
+    "texto": "Hola!! 😊 viajo con mi gato en cabina y además llevo una guitarra, ¿la guitarra cuenta como equipaje de mano?",
+    "nota_didactica": "Ambigua: menciona la mascota, pero pregunta por la guitarra.",
+    "lote": "holdout"
+  },
+  {
+    "id": "OA-020",
+    "texto": "¿Cuál es el horario de atención del call center los domingos?",
+    "nota_didactica": "Información general: va al cajón.",
+    "lote": "holdout"
+  }
+]
