@@ -1,0 +1,479 @@
+<title>Guion OrbitAir Gemini</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: un guion de cabina — columna de lectura con rail de pasos numerados (orden real de escritura) y fichas de código */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --ink:#14232b; --muted:#56656d; --line:#d5dde1;
+  --accent:#c2611a; --accent-soft:#f6e4d6; --code-bg:#0f1c23; --code-fg:#dbe6ea; --code-dim:#7f97a3;
+  --c1:#1f6f8b; --c2:#6b4fa0; --c3:#2f7d4f;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d171c; --surface:#13222a; --ink:#e3ecef; --muted:#9db0b9; --line:#25363f;
+  --accent:#ec8a43; --accent-soft:#3a2617; --code-bg:#081015; --code-fg:#d6e3e8; --code-dim:#6f8894;
+  --c1:#5bb6d4; --c2:#a98ce0; --c3:#6cc790; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d171c; --surface:#13222a; --ink:#e3ecef; --muted:#9db0b9; --line:#25363f;
+  --accent:#ec8a43; --accent-soft:#3a2617; --code-bg:#081015; --code-fg:#d6e3e8; --code-dim:#6f8894;
+  --c1:#5bb6d4; --c2:#a98ce0; --c3:#6cc790; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.75rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:.05em .35em;border-radius:4px}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:65ch}
+header{display:grid;gap:14px;margin-bottom:32px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+nav.toc a{font:500 .85rem var(--mono);color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{margin-top:56px;display:grid;gap:20px}
+.prose{display:grid;gap:12px;max-width:68ch}
+.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rung{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:6px;align-content:start}
+.rung b{font-family:var(--display);font-size:1.05rem}
+.rung .k{font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.c1 .k,.c1.k{color:var(--c1)} .c2 .k,.c2.k{color:var(--c2)} .c3 .k,.c3.k{color:var(--c3)}
+.flow{overflow-x:auto;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:18px;font:14px/1.6 var(--mono);white-space:pre}
+.class-head{display:grid;gap:8px;border-top:3px solid var(--class);padding-top:18px}
+.class-head .k{color:var(--class);font:600 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase}
+#clase1{--class:var(--c1)} #clase2{--class:var(--c2)} #clase3{--class:var(--c3)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;font:.85rem var(--mono);color:var(--muted)}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.num{font:800 1.5rem/1 var(--display);color:var(--class);font-variant-numeric:tabular-nums}
+.num small{display:block;font:500 .7rem var(--mono);color:var(--muted);margin-top:6px;letter-spacing:.06em}
+.body{display:grid;gap:12px;min-width:0}
+pre.code{margin:0;overflow-x:auto;background:var(--code-bg);color:var(--code-fg);border-radius:8px;padding:14px 16px;font:13.5px/1.55 var(--mono)}
+pre.code .c{color:var(--code-dim)}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;display:grid;gap:2px}
+.note .k{font:600 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.note.why{border-color:var(--class)} .note.why .k{color:var(--class)}
+.note.say{border-color:var(--accent)} .note.say .k{color:var(--accent)}
+.note.wide{grid-column:1/-1}
+.run{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.run pre{margin:0;overflow-x:auto;font:13px/1.55 var(--mono);color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tablebox{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+footer{margin-top:64px;color:var(--muted);font-size:.9rem}
+@media (max-width:640px){
+  .ladder,.notes{grid-template-columns:minmax(0,1fr)}
+  .step{grid-template-columns:minmax(0,1fr);gap:8px}
+}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">AI Engineer · M1 · proyecto orbitair-gemini</span>
+  <h1>Guion de clase: OrbitAir con Gemini</h1>
+  <p class="lede">Orden de escritura del código para construirlo en vivo en tres clases. Cada paso dice qué se escribe, por qué existe, qué preguntar a la clase y qué se ve al correrlo. Los resultados son de una corrida real con <code>gemini-3.1-flash-lite</code>.</p>
+  <nav class="toc" aria-label="Secciones">
+    <a href="#idea">La idea</a><a href="#setup">Paso 0</a><a href="#clase1">Clase 1</a><a href="#clase2">Clase 2</a><a href="#clase3">Clase 3</a><a href="#cierre">Cierre</a>
+  </nav>
+</header>
+
+<section id="idea">
+  <span class="eyebrow">Antes de empezar</span>
+  <h2>La idea que ordena todo</h2>
+  <div class="prose">
+    <p>OrbitAir quiere que un LLM haga la primera atención: leer la consulta del pasajero, decidir a qué equipo va y responder algo útil. El código se escribe en el orden en que aparecen las decisiones: primero <b>cómo se llama</b> al modelo, después <b>qué se le pide</b>, al final <b>qué se acepta</b> como respuesta.</p>
+    <p>Las tres clases repiten un mismo patrón: lo que varía y viene desordenado se encierra detrás de algo fijo. Ese “algo fijo” es un contrato, y cada clase lo hace más fuerte.</p>
+  </div>
+  <div class="ladder">
+    <div class="rung c1"><span class="k">Clase 1 · llm.py</span><b>Un contrato de forma</b><p>Cada respuesta del SDK se traduce a <code>LLMResponse</code>: siempre los mismos campos.</p></div>
+    <div class="rung c2"><span class="k">Clase 2 · triage.py</span><b>Un contrato pedido</b><p>El prompt le pide al modelo un formato fijo (<code>CATEGORIA: x</code>) y el código lo lee.</p></div>
+    <div class="rung c3"><span class="k">Clase 3 · contrato.py</span><b>Un contrato garantizado</b><p>El schema se exige en la llamada y Pydantic lo verifica después.</p></div>
+  </div>
+  <div class="flow" role="img" aria-label="Flujo de dependencias entre archivos">llm.py   ──►  triage.py + prompts/  ──►  contrato.py  ──►  app.py
+cómo llamo     qué le pido              qué acepto        quién lo usa
+(Clase 1)      (Clase 2)                (Clase 3)         (Clase 3)
+
+Regla: cada archivo usa al anterior; ninguno usa a uno posterior.</div>
+</section>
+
+<section id="setup">
+  <div class="class-head" style="--class:var(--accent)">
+    <span class="k">Paso 0 · todas las clases · 10 min</span>
+    <h2>Preparar el entorno</h2>
+  </div>
+  <div class="step" style="--class:var(--accent)">
+    <div class="num">0<small>setup</small></div>
+    <div class="body">
+      <pre class="code">python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+<span class="c"># copiar .env.example como .env y pegar la key de aistudio.google.com/apikey</span></pre>
+      <div class="notes">
+        <div class="note why"><span class="k">Por qué</span><p>La key vive en <code>.env</code>, fuera del código. <code>.env</code> está en <code>.gitignore</code>; <code>.env.example</code> se sube con un valor de relleno.</p></div>
+        <div class="note say"><span class="k">En clase</span><p>Verificar que todos tengan la key en <code>.env</code> y no en <code>.env.example</code>. Es el error más común y el más peligroso.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CLASE 1 ======================= -->
+<section id="clase1">
+  <div class="class-head">
+    <span class="k">Clase 1 · Cómo funciona un LLM</span>
+    <h2>llm.py: la tubería</h2>
+    <div class="meta"><span>Archivo: llm.py</span><span>Demo: python clase1.py</span><span>Regla: nadie fuera de llm.py importa el SDK</span></div>
+  </div>
+
+  <div class="step"><div class="num">1.1<small>conectar</small></div><div class="body">
+    <h3>Conectarse a Gemini</h3>
+<pre class="code">load_dotenv()
+MODELO = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
+client = genai.Client()          <span class="c"># toma GEMINI_API_KEY del entorno</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Un único cliente y un único lugar donde se elige el modelo. Cambiar de modelo es tocar el <code>.env</code>, no el código.</p></div>
+      <div class="note say"><span class="k">En clase</span><p>Probar en la consola: <code>client.models.generate_content(model=MODELO, contents="Hola").text</code>. Primer contacto, sin abstracciones.</p></div>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="num">1.2<small>contrato</small></div><div class="body">
+    <h3>El contrato de respuesta: LLMResponse</h3>
+<pre class="code">@dataclass
+class LLMResponse:
+    text: str
+    input_tokens: int
+    output_tokens: int       <span class="c"># incluye thinking: también se cobra</span>
+    thinking_tokens: int
+    latency_s: float
+    cost_usd: float
+    finish_reason: str       <span class="c"># "STOP" | "MAX_TOKENS"</span>
+    ttft_s: float | None = None</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Se escribe <b>antes</b> que la llamada. La respuesta cruda del SDK es incómoda (<code>usage_metadata</code>, enums, candidatos). El resto del proyecto solo ve estos campos.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Qué necesita saber OrbitAir de cada respuesta?” Dejar que la clase arme la lista. ¿Por qué <code>cost_usd</code> viene adentro? Para que nadie más tenga que saber la fórmula.</p></div>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="num">1.3<small>llamar</small></div><div class="body">
+    <h3>La llamada: ask()</h3>
+<pre class="code">def ask(prompt, system="", temperature=0.2, max_tokens=300, **extra):
+    t0 = time.perf_counter()
+    r = client.models.generate_content(model=MODELO, contents=prompt,
+            config=_config(system, temperature, max_tokens, **extra))
+    return _armar(r, time.perf_counter() - t0)</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p><code>_config()</code> arma los parámetros (system, temperature, max_output_tokens, thinking). <code>_armar()</code> traduce el usage a <code>LLMResponse</code>. <code>**extra</code> deja pasar opciones que se usan en la Clase 3.</p></div>
+      <div class="note say"><span class="k">Error a anticipar</span><p>Medir la latencia con el <code>print</code> adentro del cronómetro. El cronómetro va solo alrededor de la llamada.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>¿Puedo llevar a mi perro en cabina?
+tokens 40 in / 64 out · 1.80s · USD 0.0001060</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">1.4<small>tokens</small></div><div class="body">
+    <h3>Contar tokens antes de llamar</h3>
+<pre class="code">def contar_tokens(texto):
+    return client.models.count_tokens(model=MODELO, contents=texto).total_tokens</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Se paga por token, y el mismo significado no cuesta lo mismo según el idioma. <code>count_tokens</code> es gratis y permite presupuestar antes de gastar.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Cuánto cuesta el español frente al inglés? ¿Y los emojis?” Que apuesten antes de ver el número.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>  7 tokens · The payment failed at checkout.
+  9 tokens · El pago falló en el checkout.
+  7 tokens · Perdieron mi maleta
+ 15 tokens · Perdieron mi maleta 😡😡🧳❌</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">1.5<small>costo</small></div><div class="body">
+    <h3>Costo desde el usage, y dos experimentos de sampling</h3>
+<pre class="code">PRECIOS = {"gemini-3.1-flash-lite": (0.25, 1.50)}   <span class="c"># USD por 1M (input, output)</span>
+
+def calcular_costo(input_tokens, output_tokens, modelo=MODELO):
+    precio_in, precio_out = PRECIOS[modelo]
+    return input_tokens / 1_000_000 * precio_in + output_tokens / 1_000_000 * precio_out</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>El costo sale de los tokens que informa la API, nunca de una estimación. El output vale 6 veces más que el input.</p></div>
+      <div class="note say"><span class="k">Experimentos</span><p><code>temperature</code> 0 contra 1: ¿el mismo pedido da lo mismo? <code>max_tokens=20</code> con la consulta larga: el modelo corta a mitad de frase, no resume.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>temp=0.0 #1: ¡Bienvenido a bordo de OrbitAir! Es un placer tenerte con nosotros…
+temp=0.0 #2: ¡Bienvenido a bordo de OrbitAir! Es un placer tenerte con nosotros…
+temp=1.0 #2: ¡Bienvenido a bordo de OrbitAir! Es un placer contar contigo…
+finish_reason=MAX_TOKENS → 'Si pierde su conexión por causas de la aerolínea, le reubicaremos'</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">1.6<small>stream</small></div><div class="body">
+    <h3>Streaming y TTFT</h3>
+<pre class="code">for chunk in client.models.generate_content_stream(model=MODELO, contents=prompt, config=...):
+    if chunk.text:
+        if ttft is None:
+            ttft = time.perf_counter() - t0     <span class="c"># lo que percibe el pasajero</span>
+        partes.append(chunk.text)
+    ultimo = chunk                              <span class="c"># su usage es el total</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Separa la latencia percibida (primer token) de la latencia real (respuesta completa). En un chat, la percibida es la que importa.</p></div>
+      <div class="note say"><span class="k">Detalle de Gemini</span><p>Cada chunk trae el usage acumulado. Hay que quedarse con el del último, no sumarlos.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>TTFT 0.55s · total 0.83s · USD 0.0001470</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">1.7<small>reintentos</small></div><div class="body">
+    <h3>Reintentos con backoff exponencial</h3>
+<pre class="code">def with_retry(fn, max_intentos=4):
+    for intento in range(max_intentos):
+        try:
+            return fn()
+        except errors.APIError as e:
+            reintentable = e.code == 429 or e.code >= 500
+            if not reintentable or intento == max_intentos - 1:
+                raise
+            espera = _espera_sugerida(e) or (2**intento + random.uniform(0, 1))
+            time.sleep(espera)</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Un 429 (límite de uso) o un 5xx se arreglan esperando. Un 400 no se arregla solo. Si Google indica cuánto esperar (RetryInfo), esa espera manda.</p></div>
+      <div class="note say"><span class="k">En clase</span><p>Con la key gratuita es fácil ver un 429 real. Si aparece, es la demo: mostrar el mensaje de espera.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Cierre de la clase · corrida real</span><pre>Promedio por consulta: USD 0.0001019
+× 10.000 consultas:    USD 1.02</pre><p>Una fracción de centavo, multiplicada por el volumen real, se vuelve una decisión de negocio.</p></div>
+  </div></div>
+</section>
+
+<!-- ======================= CLASE 2 ======================= -->
+<section id="clase2">
+  <div class="class-head">
+    <span class="k">Clase 2 · Context engineering</span>
+    <h2>triage.py + prompts/: qué se le pide</h2>
+    <div class="meta"><span>Archivos: triage.py, prompts/triage_v1…v4.txt, CHANGELOG.md</span><span>Demo: python clase2.py</span></div>
+  </div>
+  <div class="prose"><p>Ahora el modelo no responde al pasajero: clasifica la consulta en una categoría. La tubería de la Clase 1 no cambia; lo único que cambia entre versiones es el texto del prompt. Por eso se pueden comparar.</p></div>
+
+  <div class="step"><div class="num">2.1<small>verdad</small></div><div class="body">
+    <h3>Una única fuente de verdad, y las respuestas correctas</h3>
+<pre class="code">CATEGORIAS = ["equipaje", "cambios", "reembolsos", "servicios_especiales", "otros"]
+<span class="c"># consultas.json: cada consulta trae su "categoria" correcta</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>La lista se escribe una sola vez. De ella salen el prompt (Clase 2), el contrato y el schema (Clase 3). Sin respuestas correctas no hay forma de medir un prompt.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Por qué existe <code>otros</code>?” Sin una categoría cajón, el modelo inventa una para lo que no encaja.</p></div>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="num">2.2<small>plantilla</small></div><div class="body">
+    <h3>Plantilla versionada + variables</h3>
+<pre class="code">def cargar_prompt(version):
+    plantilla = Path(f"prompts/triage_{version}.txt").read_text(encoding="utf-8")
+    return plantilla.format(empresa="OrbitAir", categorias=", ".join(CATEGORIAS))
+
+def mensaje_usuario(texto):
+    return f"&lt;consulta&gt;{texto}&lt;/consulta&gt;"</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>El archivo <code>.txt</code> se versiona; la empresa, las categorías y la consulta cambian sin tocarlo. Los delimitadores separan la instrucción del contenido del pasajero.</p></div>
+      <div class="note say"><span class="k">Ejercicio</span><p>Abrir v1 y v2 lado a lado y marcar en v2 los 4 principios: rol, contexto, tarea, formato.</p></div>
+    </div>
+    <div class="tablebox"><table>
+      <thead><tr><th>Principio</th><th>Línea en triage_v2.txt</th><th>Qué ambigüedad quita</th></tr></thead>
+      <tbody>
+        <tr><td>Rol</td><td>“Eres el agente de triage… No respondes al pasajero”</td><td>Que conteste en vez de clasificar</td></tr>
+        <tr><td>Contexto</td><td>“UNA consulta entre &lt;consulta&gt;… errores, emojis, otro idioma”</td><td>Que confunda contenido con instrucciones</td></tr>
+        <tr><td>Tarea</td><td>“EXACTAMENTE una de estas categorías… si no encaja, otros”</td><td>Respuestas múltiples o categorías inventadas</td></tr>
+        <tr><td>Formato</td><td>“Responde SOLO… CATEGORIA: &lt;categoria&gt;”</td><td>Texto libre imposible de leer con código</td></tr>
+      </tbody></table></div>
+  </div></div>
+
+  <div class="step"><div class="num">2.3<small>leer</small></div><div class="body">
+    <h3>Leer la categoría: parsear()</h3>
+<pre class="code">def parsear(respuesta):
+    ultima = respuesta.strip().splitlines()[-1]
+    m = re.match(r"CATEGOR[IÍ]A\s*:\s*(\w+)", ultima, re.IGNORECASE)
+    ...   <span class="c"># si no hay línea CATEGORIA, buscar un nombre válido suelto</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Con un formato fijo en la última línea, el código sabe dónde buscar, aunque el modelo razone antes. Es el contrato <b>pedido</b>: depende de que el modelo obedezca.</p></div>
+      <div class="note say"><span class="k">La prueba del cajón</span><p>Clasificar “¿Tienen wifi a bordo?” con v1 y con v2.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>v1: respuesta='servicios_especiales' → categoria=servicios_especiales
+v2: respuesta='CATEGORIA: otros'     → categoria=otros</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">2.4<small>medir</small></div><div class="body">
+    <h3>Evaluar todas las versiones</h3>
+<pre class="code">def evaluar(version):
+    for c in consultas:
+        categoria, r = clasificar(c["texto"], version)
+        aciertos += categoria == c["categoria"]
+        costo += r.cost_usd</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Un prompt se elige con datos: exactitud contra las etiquetas y costo por consulta. Cada versión es un archivo nuevo; nunca se edita la anterior.</p></div>
+      <div class="note say"><span class="k">Orden sugerido</span><p>Mostrar <code>v3_intuicion</code> antes que <code>v3</code>. El contraste es la lección del few-shot.</p></div>
+    </div>
+    <div class="tablebox"><table>
+      <thead><tr><th>Versión</th><th>Qué agrega</th><th>Exactitud</th><th>USD × 10.000</th></tr></thead>
+      <tbody>
+        <tr><td>v1</td><td>Una línea, sin cajón ni formato</td><td class="n">80 %</td><td class="n">0.27</td></tr>
+        <tr><td>v2</td><td>Los 4 principios</td><td class="n">90 %</td><td class="n">0.46</td></tr>
+        <tr><td>v3_intuicion</td><td>2 ejemplos “que parecían difíciles”</td><td class="n">90 %</td><td class="n">0.60</td></tr>
+        <tr><td>v3</td><td>1 regla + 1 ejemplo sacado del error real de v2 (OA-007)</td><td class="n">100 %</td><td class="n">0.64</td></tr>
+        <tr><td>v4</td><td>v3 + razonamiento (chain-of-thought)</td><td class="n">100 %</td><td class="n">1.32</td></tr>
+      </tbody></table></div>
+    <div class="notes">
+      <div class="note wide say"><span class="k">La historia que se cuenta</span><p>Los ejemplos de <code>v3_intuicion</code> eran casos que Gemini ya acertaba: 30 % más caro y ninguna mejora. El único error de v2 era una consulta con tres preguntas; un ejemplo de ese tipo lo resolvió. El razonamiento de v4 dio la misma exactitud al doble de costo. Cierre: completar <code>prompts/CHANGELOG.md</code> con qué cambió, por qué y qué se midió.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ======================= CLASE 3 ======================= -->
+<section id="clase3">
+  <div class="class-head">
+    <span class="k">Clase 3 · Salidas estructuradas y function calling</span>
+    <h2>contrato.py + app.py: qué se acepta</h2>
+    <div class="meta"><span>Archivos: contrato.py, app.py, prompts/triage_v5.txt</span><span>Demo: python clase3.py</span></div>
+  </div>
+  <div class="prose"><p>El código que viene después del modelo necesita certezas: <code>categoria == "reembolsos"</code> exige ese texto exacto y <code>confianza &lt; 0.6</code> exige un número. El contrato es la frontera entre la parte probabilística (el LLM) y la parte determinista (todo lo demás). Se escribe en este orden: primero se muestra el problema, después el contrato, después cómo se exige y cómo se recupera.</p></div>
+
+  <div class="step"><div class="num">3.1<small>problema</small></div><div class="body">
+    <h3>Modo JSON: sintaxis sí, estructura no</h3>
+<pre class="code">ask(texto, "Devuelve un JSON con categoria y confianza",
+    response_mime_type="application/json")</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué va primero</span><p>Muestra el problema antes de la solución: pedir JSON garantiza que se pueda parsear, no que sea correcto.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Este JSON sirve para enrutar el ticket?” Mirar los dos campos.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>{'categoria': 'reclamo_millas', 'confianza': '0.98'}</pre><p>Una categoría que no existe y la confianza como texto. Parseable, pero inservible.</p></div>
+  </div></div>
+
+  <div class="step"><div class="num">3.2<small>débil</small></div><div class="body">
+    <h3>Contrato débil: corre sin errores y no protege</h3>
+<pre class="code">class TriageContratoDebil(BaseModel):
+    respuesta: str
+    confianza: float
+    categoria: str
+    acciones: list[str]</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué se escribe</span><p>Para que se vea que “no tira error” no significa “valida”. Pydantic solo revisa el tipo, no los valores permitidos.</p></div>
+      <div class="note say"><span class="k">Demo</span><p>Validar <code>{"confianza": 47.0, "categoria": "factura", "acciones": ["llamar_al_gerente"]}</code>: pasa.</p></div>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="num">3.3<small>fuerte</small></div><div class="body">
+    <h3>Contrato fuerte: tipo + dominio</h3>
+<pre class="code">ACCIONES = ["derivar_agente", "pedir_num_reserva", "informar_politica",
+            "iniciar_reembolso", "sin_accion"]
+CategoriaValida = Literal[tuple(CATEGORIAS)]     <span class="c"># sale de la lista de la Clase 2</span>
+AccionValida = Literal[tuple(ACCIONES)]
+
+class TriageContrato(BaseModel):
+    respuesta: str = Field(min_length=1)
+    confianza: float = Field(ge=0.0, le=1.0)
+    categoria: CategoriaValida
+    acciones: list[AccionValida] = Field(min_length=1)</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Cada restricción cierra una puerta: texto vacío, confianza fuera de 0–1, categoría inventada, lista de acciones vacía. Las categorías se derivan de <code>CATEGORIAS</code>: si se agrega una, el contrato se actualiza solo.</p></div>
+      <div class="note say"><span class="k">Demo</span><p>El mismo dato del 3.2 ahora se rechaza, y el error dice qué campo falló y por qué.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>Fuerte: rechazado con 3 errores:
+   confianza: Input should be less than or equal to 1
+   categoria: Input should be 'equipaje', 'cambios', 'reembolsos', 'servicios_especiales' or 'otros'
+   acciones: Input should be 'derivar_agente', 'pedir_num_reserva', … or 'sin_accion'</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">3.4<small>tool call</small></div><div class="body">
+    <h3>Tool calling: exigir la forma en la llamada</h3>
+<pre class="code">TOOL_SCHEMA = TriageContrato.model_json_schema()      <span class="c"># el molde sale del contrato</span>
+
+herramienta = types.Tool(function_declarations=[types.FunctionDeclaration(
+    name="clasificar_consulta", description="Registra la clasificación…",
+    parameters_json_schema=TOOL_SCHEMA)])
+
+config = types.GenerateContentConfig(
+    tools=[herramienta],
+    tool_config=types.ToolConfig(function_calling_config=types.FunctionCallingConfig(
+        mode="ANY", allowed_function_names=["clasificar_consulta"])),
+    automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True))
+
+args = r.function_calls[0].args                        <span class="c"># ya es un dict</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>La función no existe en Python: es un formulario que el modelo está obligado a llenar. <code>mode="ANY"</code> con un solo nombre le impide responder en texto. <code>disable=True</code> evita que el SDK intente ejecutar algo.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Qué línea de v2–v4 sobra ahora?” “Responde SOLO con la categoría” contradice al schema. Por eso esta clase usa <code>triage_v5.txt</code>.</p></div>
+      <div class="note wide why"><span class="k">Diferencia con la Clase 2</span><p>Antes el formato se pedía en texto y se leía con una regex. Ahora lo define un schema que recibe la API, con varios campos tipados y valores permitidos. Tool calling previene; Pydantic igual verifica, porque el modelo todavía puede mandar <code>confianza: 1.4</code>.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real · “me cobraron dos veces el equipaje de bodega”</span><pre>{'respuesta': 'Lamento mucho el inconveniente con el cobro duplicado de tu equipaje…
+              ¿podrías proporcionarme tu número de reserva?',
+ 'confianza': 1, 'acciones': ['pedir_num_reserva'], 'categoria': 'reembolsos'}</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">3.5<small>reintento</small></div><div class="body">
+    <h3>Reintentos que dicen qué falló</h3>
+<pre class="code">for intento in range(1, max_intentos + 1):
+    if error_previo:
+        system += f"\n\n(Tu respuesta anterior fue inválida: {error_previo}. Corrígela.)"
+    r = ask_tool(texto, system)
+    try:
+        return TriageContrato.model_validate(r.args)
+    except ValidationError as e:
+        error_previo = ...            <span class="c"># qué campo y por qué</span>
+raise ContratoInvalidoError(...)</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Repetir la misma llamada es apostar al azar. Decirle al modelo qué falló es información nueva. El error va al system prompt porque es una corrección de la instrucción, no un dato del pasajero.</p></div>
+      <div class="note say"><span class="k">Conexión con la Clase 1</span><p>Es la misma idea que respetar el RetryInfo de Google: no reintentar a ciegas, usar lo que se sabe del fallo. Para la demo, <code>"simular_error": True</code> rompe el primer intento.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>intento 1 inválido → confianza: Input should be less than or equal to 1; categoria: …
+intento 2 válido   → categoria='servicios_especiales' acciones=['informar_politica']</pre></div>
+  </div></div>
+
+  <div class="step"><div class="num">3.6<small>errores</small></div><div class="body">
+    <h3>Errores tipados</h3>
+<pre class="code">class ConsultaInvalidaError(Exception): ...   <span class="c"># texto vacío: error de quien llama</span>
+class ContratoInvalidoError(Exception): ...   <span class="c"># se agotaron los reintentos</span>
+
+if not texto.strip():                         <span class="c"># antes de gastar una sola llamada</span>
+    raise ConsultaInvalidaError("La consulta no puede estar vacía.")</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>No todos los errores merecen el mismo trato. Una consulta vacía no se arregla reintentando; un contrato inválido quizás sí. Nombrarlos permite decidir.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿De quién es la culpa en cada caso?” Esa respuesta define el código HTTP del paso siguiente.</p></div>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="num">3.7<small>API</small></div><div class="body">
+    <h3>La API: cada error, su código HTTP</h3>
+<pre class="code">@app.post("/triage")
+def triage(consulta: ConsultaIn):
+    try:
+        return clasificar_validado(consulta.model_dump()).model_dump()
+    except ConsultaInvalidaError as e:
+        raise HTTPException(400, detail=str(e))   <span class="c"># revisá lo que enviaste</span>
+    except ContratoInvalidoError as e:
+        raise HTTPException(502, detail=str(e))   <span class="c"># era válida, no pude procesarla</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué es tan corta</span><p>Todo el trabajo ya está en las capas de abajo. La API solo traduce excepciones a códigos. Quien la consume sabe si tiene sentido reintentar (502) o no (400).</p></div>
+      <div class="note say"><span class="k">Demo en vivo</span><p><code>uvicorn app:app --reload</code> y abrir <code>/docs</code>. Probar <code>{"texto": ""}</code>, una consulta normal y una con <code>"simular_error": true</code>.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>200 ← {'texto': '¿Tienen wifi a bordo?'} → {'categoria': 'otros', 'acciones': ['sin_accion'], 'confianza': 1.0, …}
+400 ← {'texto': ''}                      → {'detail': 'La consulta no puede estar vacía.'}</pre></div>
+  </div></div>
+</section>
+
+<section id="cierre">
+  <span class="eyebrow">Cierre del módulo</span>
+  <h2>La escalera, en tres frases</h2>
+  <div class="ladder">
+    <div class="rung c1"><span class="k">Clase 1</span><b>Cada proveedor responde distinto</b><p>Lo envuelvo en <code>LLMResponse</code>.</p></div>
+    <div class="rung c2"><span class="k">Clase 2</span><b>El modelo escribe como quiere</b><p>Le pido un formato y lo leo.</p></div>
+    <div class="rung c3"><span class="k">Clase 3</span><b>Pedir no alcanza</b><p>Exijo un schema y lo verifico.</p></div>
+  </div>
+  <div class="tablebox"><table>
+    <thead><tr><th>Síntoma en clase</th><th>Causa</th></tr></thead>
+    <tbody>
+      <tr><td><code>ValueError: No API key was provided</code></td><td>No hay <code>.env</code>, o la key quedó en <code>.env.example</code></td></tr>
+      <tr><td><code>400 API key not valid</code></td><td>Key mal copiada: espacios o comillas</td></tr>
+      <tr><td><code>429 RESOURCE_EXHAUSTED</code></td><td>Límite del tier gratuito; <code>with_retry</code> espera lo que pide Google</td></tr>
+      <tr><td><code>400 INVALID_ARGUMENT</code> por thinking</td><td>El modelo no acepta <code>minimal</code>: poner <code>GEMINI_THINKING=low</code></td></tr>
+      <tr><td>Respuesta vacía con <code>MAX_TOKENS</code></td><td>El thinking consumió <code>max_output_tokens</code></td></tr>
+      <tr><td><code>KeyError</code> al formatear el prompt</td><td>Llaves literales en la plantilla: se escriben dobles <code>{{ }}</code></td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>Proyecto: <code>AI Engineer ensayos/orbitair-gemini</code>. Los números son de una corrida real y pueden variar entre corridas: volver a medir en clase.</footer>
+</div>
