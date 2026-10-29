@@ -1,0 +1,12 @@
+[
+  {"id": "OA-001", "texto": "¿Puedo llevar a mi perro en cabina?", "categoria": "servicios_especiales"},
+  {"id": "OA-002", "texto": "Mi vuelo OA123 de Bogotá a Lima fue cancelado. ¿Qué opciones tengo para reprogramar?", "categoria": "cambios"},
+  {"id": "OA-003", "texto": "Hi, I was charged twice for my seat upgrade on flight OA455. How can I get a refund?", "categoria": "reembolsos"},
+  {"id": "OA-004", "texto": "Perdieron mi maleta 😡😡 llevo 3 días esperando!!! 🧳❌ vuelo OA778 ✈️", "categoria": "equipaje"},
+  {"id": "OA-005", "texto": "¿Cuáles son las medidas del equipaje de mano en la tarifa Light?", "categoria": "equipaje"},
+  {"id": "OA-006", "texto": "Compré el boleto con un error en mi apellido. ¿Lo puedo corregir sin pagar?", "categoria": "cambios"},
+  {"id": "OA-007", "texto": "Si pierdo la conexión en São Paulo, ¿me reubican? ¿Me dan hotel? Y viajo con mi madre en silla de ruedas, ¿cómo pido asistencia?", "categoria": "cambios"},
+  {"id": "OA-008", "texto": "kiero cambiar la fecha d mi vuelo xq me enferme, se puede sin multa??", "categoria": "cambios"},
+  {"id": "OA-009", "texto": "En el aeropuerto me cobraron dos veces el equipaje de bodega.", "categoria": "reembolsos"},
+  {"id": "OA-010", "texto": "¿Tienen wifi a bordo en los vuelos internacionales?", "categoria": "otros"}
+]

@@ -1,0 +1,8 @@
+{
+  "version": "v1",
+  "inyeccion":    { "marcar": 0.4, "bloquear": 0.7 },
+  "jailbreak":    { "marcar": 0.4, "bloquear": 0.7 },
+  "exfiltracion": { "marcar": 0.3, "bloquear": 0.6 },
+  "acoso":        { "marcar": 0.5, "bloquear": 0.9 },
+  "default":      { "marcar": 0.5, "bloquear": 0.8 }
+}
