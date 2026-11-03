@@ -1,0 +1,336 @@
+<title>Guion OrbitAir Evals</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: un guion de cabina — columna de lectura con rail de pasos numerados (orden real de escritura) y fichas de código */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --ink:#14232b; --muted:#56656d; --line:#d5dde1;
+  --accent:#c2611a; --accent-soft:#f6e4d6; --code-bg:#0f1c23; --code-fg:#dbe6ea; --code-dim:#7f97a3;
+  --c1:#1f6f8b; --c2:#6b4fa0; --c3:#2f7d4f;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d171c; --surface:#13222a; --ink:#e3ecef; --muted:#9db0b9; --line:#25363f;
+  --accent:#ec8a43; --accent-soft:#3a2617; --code-bg:#081015; --code-fg:#d6e3e8; --code-dim:#6f8894;
+  --c1:#5bb6d4; --c2:#a98ce0; --c3:#6cc790; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d171c; --surface:#13222a; --ink:#e3ecef; --muted:#9db0b9; --line:#25363f;
+  --accent:#ec8a43; --accent-soft:#3a2617; --code-bg:#081015; --code-fg:#d6e3e8; --code-dim:#6f8894;
+  --c1:#5bb6d4; --c2:#a98ce0; --c3:#6cc790; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:1.75rem;font-weight:800}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+code{font-family:var(--mono);font-size:.88em;background:var(--accent-soft);padding:.05em .35em;border-radius:4px}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:65ch}
+header{display:grid;gap:14px;margin-bottom:32px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+nav.toc a{font:500 .85rem var(--mono);color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--surface)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);outline:none}
+section{margin-top:56px;display:grid;gap:20px}
+.prose{display:grid;gap:12px;max-width:68ch}
+.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rung{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:6px;align-content:start}
+.rung b{font-family:var(--display);font-size:1.05rem}
+.rung .k{font:500 .72rem var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.c1 .k,.c1.k{color:var(--c1)} .c2 .k,.c2.k{color:var(--c2)} .c3 .k,.c3.k{color:var(--c3)}
+.flow{overflow-x:auto;background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:18px;font:14px/1.6 var(--mono);white-space:pre}
+.class-head{display:grid;gap:8px;border-top:3px solid var(--class);padding-top:18px}
+.class-head .k{color:var(--class);font:600 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase}
+#clase1{--class:var(--c1)} #clase2{--class:var(--c2)} #clase3{--class:var(--c3)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;font:.85rem var(--mono);color:var(--muted)}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.num{font:800 1.5rem/1 var(--display);color:var(--class);font-variant-numeric:tabular-nums}
+.num small{display:block;font:500 .7rem var(--mono);color:var(--muted);margin-top:6px;letter-spacing:.06em}
+.body{display:grid;gap:12px;min-width:0}
+pre.code{margin:0;overflow-x:auto;background:var(--code-bg);color:var(--code-fg);border-radius:8px;padding:14px 16px;font:13.5px/1.55 var(--mono)}
+pre.code .c{color:var(--code-dim)}
+.notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;display:grid;gap:2px}
+.note .k{font:600 .7rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.note.why{border-color:var(--class)} .note.why .k{color:var(--class)}
+.note.say{border-color:var(--accent)} .note.say .k{color:var(--accent)}
+.note.wide{grid-column:1/-1}
+.run{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.run pre{margin:0;overflow-x:auto;font:13px/1.55 var(--mono);color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+.tablebox{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.n{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+footer{margin-top:64px;color:var(--muted);font-size:.9rem}
+@media (max-width:640px){
+  .ladder,.notes{grid-template-columns:minmax(0,1fr)}
+  .step{grid-template-columns:minmax(0,1fr);gap:8px}
+}
+#clase4{--class:var(--accent)}
+.timeline{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.slot{display:grid;grid-template-columns:90px minmax(0,1fr) minmax(0,1.1fr);gap:16px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.slot:last-child{border-bottom:0}
+.slot .t{font:700 1rem var(--display);color:var(--accent);font-variant-numeric:tabular-nums}
+.slot .t small{display:block;font:500 .72rem var(--mono);color:var(--muted)}
+.slot code.cmd{display:inline-block;margin-top:4px}
+.prov{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.prov > div{display:grid;gap:6px;min-width:0}
+@media (max-width:640px){.slot,.prov{grid-template-columns:minmax(0,1fr);gap:6px}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">AI Engineer · M1 · L5 · proyecto orbitair</span>
+  <h1>Guion de clase: OrbitAir con evals</h1>
+  <p class="lede">En C2 elegimos el prompt “porque parecía mejor”. Hoy se elige con una suite de evaluación: 30 casos curados, exact match, un juez LLM validado, un umbral por categoría y costo por acierto. El guion sigue el orden en que se escribe y se corre el código, de a un paso. Los números son de una corrida real con <code>gemini-3.1-flash-lite</code>.</p>
+  <nav class="toc" aria-label="Secciones">
+    <a href="#estrategia">Estrategia</a><a href="#setup">Paso 0</a><a href="#clase1">A · Medir</a><a href="#clase2">B · Comparar</a><a href="#clase3">C · Decidir</a><a href="#proveedores">OpenAI y Claude</a><a href="#cierre">Cierre M1</a>
+  </nav>
+</header>
+
+<section id="estrategia">
+  <span class="eyebrow">Cómo ejecutarla</span>
+  <h2>Estrategia progresiva: un archivo, una corrida, una pregunta</h2>
+  <div class="prose">
+    <p>La clase avanza en el orden del pipeline. En cada bloque se escribe <b>un archivo</b>, se corre <b>un paso</b> con <code>python clase5.py --hasta=5.x</code> y se cierra con <b>una pregunta</b> a la clase. Nunca se escribe código que todavía no se pueda ejecutar.</p>
+    <p>Hay dos redes de seguridad. <code>test_metricas.py</code> prueba las métricas sin gastar nada. <code>--sin-api</code> recalcula todo desde los <code>.jsonl</code> ya guardados, así que si en vivo falla la red o la cuota, la clase sigue con la corrida anterior.</p>
+  </div>
+  <div class="timeline">
+    <div class="slot"><div class="t">0–10′<small>Paso 0</small></div><div><b>Partir de L4</b><p>Copiar <code>llm.py</code>, <code>triage.py</code>, prompts v1–v4 y <code>.env</code>.</p></div><div><code class="cmd">python test_metricas.py</code><p>Arranca en verde antes de tocar la API.</p></div></div>
+    <div class="slot"><div class="t">10–20′<small>5.1</small></div><div><b>registro.py</b><p>El print de C1 pasa a ser una fila de datos.</p></div><div><code class="cmd">python clase5.py --hasta=5.1</code><p>Una llamada: mostrar la fila completa.</p></div></div>
+    <div class="slot"><div class="t">20–35′<small>5.2</small></div><div><b>eval_dataset.json</b><p>Cada alumno escribe 2 casos propios <i>con la referencia antes</i> de correrlos.</p></div><div><code class="cmd">python clase5.py --hasta=5.2</code><p>Balance por categoría y por dificultad.</p></div></div>
+    <div class="slot"><div class="t">35–55′<small>5.3</small></div><div><b>metricas.py</b> (exact match)<p>Mientras corre la suite (alrededor de 2 minutos), la clase apuesta qué versión gana.</p></div><div><code class="cmd">python clase5.py --hasta=5.3</code><p>Plan B: <code>--sin-api --hasta=5.3</code>.</p></div></div>
+    <div class="slot"><div class="t">55–75′<small>5.4</small></div><div><b>juez.py</b><p>Primero se valida el juez, después se juzga v4. Mostrar en pantalla el código de OpenAI y Claude.</p></div><div><code class="cmd">python clase5.py --hasta=5.4</code><p>Discutir las discrepancias caso por caso.</p></div></div>
+    <div class="slot"><div class="t">75–85′<small>5.5</small></div><div><b>Umbral</b><p>Subir <code>UMBRAL_MINIMO</code> a 0.85 en vivo y volver a correr con <code>--sin-api</code>.</p></div><div><code class="cmd">python clase5.py --sin-api --hasta=5.5</code><p>Cambia quién queda descartado, con costo cero.</p></div></div>
+    <div class="slot"><div class="t">85–100′<small>5.6</small></div><div><b>reporte.py</b><p>La clase escribe a mano la decisión final del reporte.</p></div><div><code class="cmd">python clase5.py --sin-api</code><p>Abrir <code>results/reporte_eval.md</code>.</p></div></div>
+    <div class="slot"><div class="t">100–110′<small>Cierre</small></div><div><b>Frameworks y M1</b><p>promptfoo, OpenAI Evals, RAGAS. Cerrar el recorrido de C1 a C5.</p></div><div><p>Commit de <code>results/</code>: el reporte se versiona junto al código.</p></div></div>
+  </div>
+</section>
+
+<section id="setup">
+  <div class="class-head" style="--class:var(--accent)"><span class="k">Paso 0</span><h2>Partir de la L4</h2></div>
+  <div class="step" style="--class:var(--accent)"><div class="num">0<small>setup</small></div><div class="body">
+<pre class="code">L5/orbitair/
+├── llm.py · triage.py · prompts/triage_v1..v4.txt   <span class="c"># copiados de L4: C1 + C2</span>
+├── registro.py      <span class="c"># 5.1</span>
+├── data/eval_dataset.json · data/juez_humano.json   <span class="c"># 5.2 · 5.4b</span>
+├── metricas.py      <span class="c"># 5.3 · 5.5</span>
+├── juez.py          <span class="c"># 5.4</span>
+├── reporte.py       <span class="c"># 5.6</span>
+├── clase5.py · test_metricas.py
+└── ejemplos/juez_proveedores.py                    <span class="c"># OpenAI + Claude (referencia)</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>No se toca ningún prompt. La clase no mejora el sistema: lo <b>mide</b>. Por eso se reutilizan v1–v4 tal como quedaron en C2, y <code>ask()</code> de C1 ya trae tokens, costo y latencia.</p></div>
+      <div class="note say"><span class="k">En clase</span><p>Releer la tabla del CHANGELOG de C2: con 10 consultas, v3 y v4 daban 100 %. “¿Alcanza ese dato para decidir?” Hoy la respuesta es no.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<section id="clase1">
+  <div class="class-head" style="--class:var(--c1)"><span class="k">Parte A · Medir</span><h2>El registro y el dataset</h2>
+    <div class="meta"><span>Archivos: registro.py · data/eval_dataset.json</span><span>Demo: --hasta=5.1 y 5.2</span></div></div>
+
+  <div class="step" style="--class:var(--c1)"><div class="num">5.1<small>registro</small></div><div class="body">
+<pre class="code">@dataclass
+class RegistroEval:
+    caso_id: str; version_prompt: str; texto: str
+    categoria_esperada: str; categoria_obtenida: str | None
+    input_tokens: int; output_tokens: int; costo_usd: float; latencia_s: float
+    respuesta: str      <span class="c"># cruda: el juez lee el razonamiento de v4 de acá</span>
+    timestamp: float
+
+def guardar_corrida(registros, version):   <span class="c"># results/eval_v2.jsonl: una corrida, un archivo</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Input, referencia y salida viven en la <b>misma fila</b>. Si estuvieran en archivos separados, dos corridas podrían desincronizarlos. El <code>.jsonl</code> por versión permite recalcular métricas sin volver a pagar llamadas: de ahí sale <code>--sin-api</code>.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>“¿Por qué guardamos el costo si hoy hablamos de calidad?” Porque el costo es parte de la decisión, no un dato aparte.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>{ "caso_id": "EVAL-001", "version_prompt": "v2",
+  "categoria_esperada": "equipaje", "categoria_obtenida": "equipaje",
+  "input_tokens": 148, "output_tokens": 5, "costo_usd": 4.45e-05, "latencia_s": 1.33,
+  "respuesta": "CATEGORIA: equipaje" }</pre></div>
+  </div></div>
+
+  <div class="step" style="--class:var(--c1)"><div class="num">5.2<small>dataset</small></div><div class="body">
+<pre class="code">{ "id": "EVAL-005",
+  "texto": "Viajo con un cochecito de bebé, ¿lo puedo dejar en la puerta del avión?",
+  "categoria_esperada": "equipaje",      <span class="c"># la referencia: decidida ANTES de correr</span>
+  "dificultad": "dificil",
+  "nota": "menciona bebé (tienta a servicios_especiales) pero PIDE qué hacer con un objeto",
+  "criterio": "distingue que menciona un bebé pero lo que pregunta es cómo transportar el cochecito" }</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Las cuatro decisiones de la lección: casos difíciles (50 %, más que en producción), tamaño suficiente (30, para que un caso no mueva todo), referencia previa y categorías parejas (6 cada una). El <code>criterio</code> es lo que usa el juez en 5.4.</p></div>
+      <div class="note say"><span class="k">Ejercicio</span><p>Cada alumno escribe 2 casos “trampa” con su referencia y su nota <b>antes</b> de correrlos. Después se agregan al dataset.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>casos: 30
+por categoría : {'equipaje': 6, 'cambios': 6, 'reembolsos': 6, 'servicios_especiales': 6, 'otros': 6}
+por dificultad: {'facil': 15, 'ambiguo': 9, 'dificil': 6}</pre></div>
+  </div></div>
+</section>
+
+<section id="clase2">
+  <div class="class-head" style="--class:var(--c2)"><span class="k">Parte B · Comparar</span><h2>Exact match y LLM-as-judge</h2>
+    <div class="meta"><span>Archivos: metricas.py · juez.py · data/juez_humano.json</span><span>Demo: --hasta=5.3 y 5.4</span></div></div>
+
+  <div class="step" style="--class:var(--c2)"><div class="num">5.3<small>exact match</small></div><div class="body">
+<pre class="code">def exact_match(categoria_modelo, categoria_referencia) -> bool:
+    if categoria_modelo is None: return False          <span class="c"># sin categoría = error, no se descarta</span>
+    return categoria_modelo.strip().lower() == categoria_referencia.strip().lower()
+
+def evaluar_exact_match(registros) -> dict:            <span class="c"># global Y por categoría</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>La categoría tiene forma cerrada: o es <code>equipaje</code> o no lo es. Exact match es gratis, instantáneo y da siempre lo mismo. El desglose por categoría es lo que muestra el problema: v1 tiene 63 % de total, pero <code>otros</code> da 0 %.</p></div>
+      <div class="note say"><span class="k">Pregunta</span><p>Antes de correr: “¿Quién gana, v3 o v4 (la que razona)?”. La mayoría apuesta por v4.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real · 120 llamadas</span><pre>          equipaje   cambios  reembolsos  serv_esp   otros   total
+v1             67%       83%        83%       83%      0%     63%
+v2             83%       83%       100%      100%    100%     93%
+v3             83%      100%       100%      100%    100%     97%
+v4             83%       83%        83%       83%    100%     87%
+EVAL-005 (cochecito) → servicios_especiales en las 4 versiones</pre></div>
+    <div class="note say wide"><span class="k">Trampa para mostrar</span><p>EVAL-005 lo fallan todas las versiones. Alguien va a decir “en realidad es servicio especial”. Cambiar la referencia <b>ahora</b>, después de ver la salida, es elegir la hipótesis después de ver los datos. Si se discute, se discute antes de la próxima corrida y queda documentado en <code>nota</code>.</p></div>
+  </div></div>
+
+  <div class="step" style="--class:var(--c2)"><div class="num">5.4<small>el juez</small></div><div class="body">
+<pre class="code">JUEZ_SYSTEM = """Sos un evaluador estricto de razonamientos de un sistema de triage...
+Un razonamiento largo no es mejor por ser largo.
+Devolvé exactamente dos líneas:
+VEREDICTO: si|no
+MOTIVO: &lt;una línea&gt;"""
+
+def juzgar_razonamiento(consulta, criterio, razonamiento, repeticiones=1):
+    r = ask(prompt, JUEZ_SYSTEM, temperature=0.0)        <span class="c"># nada de creatividad en quien evalúa</span>
+    ...                                                  <span class="c"># varias corridas → voto por mayoría</span>
+
+def validar_juez():   <span class="c"># 5.4b: 6 razonamientos puntuados por un humano → ¿coincide el juez?</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>El razonamiento de v4 es texto libre: no se puede comparar con <code>==</code>. Se juzga contra el <code>criterio</code>, que también se fijó antes. v1–v3 no razonan, así que para ellas exact match ya es la métrica completa.</p></div>
+      <div class="note say"><span class="k">En clase</span><p>Antes de juzgar, se valida el juez. J-4 es un razonamiento <b>largo y malo</b>, a propósito: prueba si el juez se deja impresionar por la longitud.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real</span><pre>J-1..J-6: humano y juez coinciden en 6/6 → acuerdo 100%
+v4 · razonamiento aplica el criterio: 83%
+discrepancia EVAL-005: exact_match=False juez=si  ← falló la categoría, razonó bien
+discrepancia EVAL-015: exact_match=False juez=si
+discrepancia EVAL-004: exact_match=True  juez=no  ← acertó "por patrón"
+discrepancia EVAL-025 · EVAL-026: exact_match=True juez=no</pre></div>
+    <div class="note why wide"><span class="k">La idea</span><p>Que exact match y el juez no coincidan no es un bug de ninguno de los dos: miden cosas distintas. La pregunta útil es qué dice cada discrepancia sobre ese caso. Si el juez no coincidiera con el humano, el problema estaría en el juez, no en los prompts.</p></div>
+  </div></div>
+</section>
+
+<section id="clase3">
+  <div class="class-head" style="--class:var(--c3)"><span class="k">Parte C · Decidir</span><h2>Umbral, costo por acierto y reporte</h2>
+    <div class="meta"><span>Archivos: metricas.py · reporte.py</span><span>Demo: --sin-api --hasta=5.5 · --sin-api</span></div></div>
+
+  <div class="step" style="--class:var(--c3)"><div class="num">5.5<small>umbral</small></div><div class="body">
+<pre class="code">UMBRAL_MINIMO = 0.70   <span class="c"># por categoría — fijado ANTES de correr nada</span>
+
+def chequear_regresion(scores_por_categoria) -> list[str]:
+    return [c for c, s in scores_por_categoria.items() if s &lt; UMBRAL_MINIMO]</pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>“v2 acierta 93 %” no dice nada sin un piso. Regresión, en su forma más simple, es una categoría por debajo del umbral. La comparación contra una corrida anterior, con margen de ruido, queda para más adelante.</p></div>
+      <div class="note say"><span class="k">Experimento</span><p>Subir el umbral a <code>0.85</code> y correr <code>--sin-api --hasta=5.5</code>. v2, v3 y v4 caen por <code>equipaje</code> (83 %). Sin llamar al modelo, la decisión cambia. Por eso el umbral se fija antes.</p></div>
+    </div>
+    <div class="run"><span class="eyebrow">Corrida real (0.70)</span><pre>v1: ✘ descartada · equipaje, otros  (total 63%)
+v2: ✔ candidata  (total 93%)
+v3: ✔ candidata  (total 97%)
+v4: ✔ candidata  (total 87%)</pre></div>
+  </div></div>
+
+  <div class="step" style="--class:var(--c3)"><div class="num">5.6<small>reporte</small></div><div class="body">
+<pre class="code">def costo_por_acierto(costo_total_usd, aciertos):
+    return costo_total_usd / aciertos if aciertos else float("inf")
+
+def generar_reporte(resultados, dataset, juez) -> str:
+    <span class="c"># 1. ¿qué se evaluó?  2. ¿quién queda bajo el umbral?  3. ¿el mejor score es el mejor costo?</span></pre>
+    <div class="notes">
+      <div class="note why"><span class="k">Por qué</span><p>Un número en la terminal solo le sirve a quien corrió el script. El reporte se versiona con el código, igual que <code>tabla_comparativa.md</code> en C1, y se lee sin correr nada.</p></div>
+      <div class="note say"><span class="k">Cierre del bloque</span><p>La clase escribe la decisión. No hay respuesta única: v3 por calidad o v2 por costo. Lo que no vale es “v3 me gusta más”.</p></div>
+    </div>
+    <div class="tablebox"><table>
+      <thead><tr><th>Versión</th><th>Bajo umbral</th><th>Score</th><th>Costo por acierto</th><th>USD/mes (100k)</th><th>Tokens out</th></tr></thead>
+      <tbody>
+        <tr><td>v1</td><td>equipaje (67 %), otros (0 %)</td><td class="n">63 %</td><td class="n">$0.000039</td><td class="n">$2.48</td><td class="n">9</td></tr>
+        <tr><td>v2</td><td>ninguna</td><td class="n">93 %</td><td class="n"><b>$0.000048</b></td><td class="n">$4.51</td><td class="n">5</td></tr>
+        <tr><td>v3</td><td>ninguna</td><td class="n"><b>97 %</b></td><td class="n">$0.000065</td><td class="n">$6.28</td><td class="n">5</td></tr>
+        <tr><td>v4 (CoT)</td><td>ninguna</td><td class="n">87 %</td><td class="n">$0.000149</td><td class="n">$12.89</td><td class="n">43</td></tr>
+      </tbody></table></div>
+    <div class="run"><span class="eyebrow">Conclusión del reporte</span><pre>Pasan el umbral: v2, v3, v4. Mejor score: v3. Mejor costo por acierto: v2.
+Elegir v3 sobre v2 cuesta $1.77/mes más por +3% de score.
+v4 (razona) cuesta el doble que v3 y acierta menos: "pensar" no siempre paga.</pre></div>
+  </div></div>
+</section>
+
+<section id="proveedores">
+  <span class="eyebrow">Mostrar en pantalla, no se corre</span>
+  <h2>El mismo juez en OpenAI y en Claude</h2>
+  <p class="prose">El prompt del juez, el parseo y la validación son idénticos en los tres. Solo cambia la llamada. Está completo en <code>ejemplos/juez_proveedores.py</code>, que se ejecuta si hay key de ese proveedor y si no, lo omite.</p>
+  <div class="prov">
+    <div><span class="eyebrow">Gemini · clase</span>
+<pre class="code">r = client.models.generate_content(
+  model=MODELO,
+  contents=prompt,
+  config=types.GenerateContentConfig(
+    system_instruction=JUEZ_SYSTEM,
+    temperature=0.0,
+    max_output_tokens=120))
+texto = r.text
+r.usage_metadata.prompt_token_count</pre></div>
+    <div><span class="eyebrow">OpenAI</span>
+<pre class="code">r = client.chat.completions.create(
+  model="gpt-5-mini",
+  messages=[
+    {"role": "system",
+     "content": JUEZ_SYSTEM},
+    {"role": "user", "content": prompt}],
+  temperature=0.0,
+  max_completion_tokens=120)
+texto = r.choices[0].message.content
+r.usage.prompt_tokens</pre></div>
+    <div><span class="eyebrow">Claude</span>
+<pre class="code">r = client.messages.create(
+  model="claude-haiku-5-5",
+  system=JUEZ_SYSTEM,
+  messages=[
+    {"role": "user", "content": prompt}],
+  temperature=0.0,
+  max_tokens=120)   <span class="c"># obligatorio</span>
+texto = "".join(b.text for b in r.content
+                if b.type == "text")
+r.usage.input_tokens</pre></div>
+  </div>
+  <div class="note why"><span class="k">Buena práctica</span><p>Usar como juez un modelo de <b>otro proveedor</b> que el evaluado reduce el sesgo de “un modelo se aprueba a sí mismo”. Es la misma idea del cliente multi-proveedor de C1.</p></div>
+</section>
+
+<section id="cierre">
+  <span class="eyebrow">Cierre de la clase y de M1</span>
+  <h2>Primero a mano, después con un framework</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>Framework</th><th>Qué ya resuelve</th><th>Equivalente de hoy</th></tr></thead>
+    <tbody>
+      <tr><td>promptfoo · OpenAI Evals</td><td>Correr casos contra varios prompts o modelos y comparar lado a lado</td><td><code>clase5.py</code> + <code>reporte.py</code></td></tr>
+      <tr><td>RAGAS</td><td><i>faithfulness</i> y <i>answer relevancy</i> formalizados</td><td><code>juez.py</code> contra un criterio</td></tr>
+    </tbody></table></div>
+  <div class="ladder">
+    <div class="rung c1"><span class="k">C1 · C2</span><b>Hablarle al modelo</b><p>Un cliente que mide costo, y prompts versionados que nunca se editan.</p></div>
+    <div class="rung c2"><span class="k">C3 · C4</span><b>Confiar en la salida</b><p>Contrato validado y guardrails en la entrada y en la salida.</p></div>
+    <div class="rung c3"><span class="k">C5</span><b>Saber que es bueno</b><p>Dataset, métricas, umbral y costo por acierto en un reporte.</p></div>
+  </div>
+  <div class="tablebox"><table>
+    <thead><tr><th>Síntoma en clase</th><th>Causa</th></tr></thead>
+    <tbody>
+      <tr><td><code>FileNotFoundError: results/eval_v4.jsonl</code></td><td>Se corrió <code>--sin-api</code> sin una corrida previa, o 5.4 antes que 5.3</td></tr>
+      <tr><td>Muchos <code>⚠ error 429</code></td><td>Cuota gratuita por minuto: <code>with_retry</code> espera solo. Si se traba, pasar a <code>--sin-api</code></td></tr>
+      <tr><td><code>categoria_obtenida: None</code> en v1</td><td>v1 no fija formato ni tiene “otros”: el parser no encuentra categoría y cuenta como error</td></tr>
+      <tr><td>Los números no coinciden con el guion</td><td>Otro modelo en <code>.env</code> o una versión nueva: se vuelve a medir, para eso está la suite</td></tr>
+      <tr><td>El juez devuelve <code>veredicto: None</code></td><td>No respetó el formato de dos líneas: es un dato sobre el juez, no un crash</td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>Proyecto: <code>M1/L5/orbitair</code> (repo IA-Engineer-M1-Orbitair-case). Números de una corrida real; pueden variar levemente, así que conviene volver a medir en clase.</footer>
+</div>
