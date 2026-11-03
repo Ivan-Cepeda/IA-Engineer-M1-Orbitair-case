@@ -36,7 +36,7 @@ def atender(texto: str, user_id: str = "anonimo", externo: str | None = None, mo
 
     # --- Compuerta 2 (salida): lo que el modelo dijo tampoco es confiable hasta revisarlo ---
     respuesta, pii_salida = redactar(contrato.respuesta)
-    salida = moderar(respuesta, user_id, "reglas", request_id, etapa="salida")  # reglas: barato y suficiente
+    salida = moderar(respuesta, user_id, modo, request_id, etapa="salida")  # reglas + LLM: una llamada más < una vulneración
     if salida.action != "permitir":
         respuesta = RESPUESTA_REVISION
 
@@ -47,4 +47,5 @@ def atender(texto: str, user_id: str = "anonimo", externo: str | None = None, mo
         "acciones": contrato.acciones,
         "pii_redactada": {"entrada": pii, "salida": pii_salida},  # tipos, nunca valores
         "moderacion": entrada.model_dump(),
+        "moderacion_salida": salida.model_dump(),
     }

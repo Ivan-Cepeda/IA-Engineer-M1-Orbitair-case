@@ -357,9 +357,9 @@ def decidir(puntajes, fuente, umbrales, request_id) -> Decision:
         externo, _ = redactar(neutralizar(externo))
     contrato = clasificar_validado({"texto": texto_limpio, "externo": externo, "prompt": "v6"})  <span class="c"># 4. L3</span>
     respuesta, _ = redactar(contrato.respuesta)               <span class="c"># 5. compuerta 2</span>
-    salida = moderar(respuesta, user_id, "reglas", request_id, etapa="salida")</pre>
+    salida = moderar(respuesta, user_id, modo, request_id, etapa="salida")  <span class="c"># reglas + LLM de salida</span></pre>
     <div class="notes">
-      <div class="note why"><span class="k">Por qué</span><p>Lo que dice el modelo tampoco es confiable hasta revisarlo, por eso hay dos compuertas. La de salida usa solo reglas: es barata y alcanza para detectar ecos de control o PII. El mismo <code>request_id</code> une las dos líneas de log.</p></div>
+      <div class="note why"><span class="k">Por qué</span><p>Lo que dice el modelo tampoco es confiable hasta revisarlo, por eso hay dos compuertas. La de salida también corre reglas + LLM, pero el LLM usa otras categorías (<code>promesa_indebida</code>, <code>fuga_interna</code>, <code>obedece_inyeccion</code>, <code>tono_inapropiado</code>): un regex no sabe que “tu reembolso ya fue aprobado” es un problema. Cuesta una llamada más; más vale eso que una vulneración. El mismo <code>request_id</code> une las dos líneas de log.</p></div>
       <div class="note say"><span class="k">Error real para contar</span><p>La primera versión moderaba <b>antes</b> de redactar, y Gemini marcó la tarjeta del propio pasajero como <code>exfiltracion</code>: lo bloqueó sin motivo. La solución fue invertir el orden. Hasta el moderador, que también es un LLM, debe ver lo mínimo.</p></div>
     </div>
     <div class="run"><span class="eyebrow">Corrida real</span>
